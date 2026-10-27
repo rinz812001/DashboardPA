@@ -26,11 +26,11 @@
     }
   </script>
 </head>
-<body class="bg-gray-100 text-gray-800 min-h-screen">
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
 
   <!-- HEADER -->
-  <header class="bg-navy-800 text-white shadow-lg" style="background-color:#1e3a5f;">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+  <header class="text-white shadow-lg" style="background-color:#1e3a5f;">
+    <div class="px-4 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
       <div>
         <h1 class="text-xl font-bold tracking-wide">🎓 Dashboard Penasihat Akademik</h1>
         <p class="text-sm text-blue-200 mt-0.5">Kelas <strong>DIT3J</strong> &nbsp;|&nbsp; Sesi Semasa: <strong>Sesi 1: 2026/2027 (Semester 3)</strong></p>
@@ -42,20 +42,24 @@
     </div>
   </header>
 
-  <!-- NAV TABS -->
-  <nav class="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 flex gap-1 overflow-x-auto py-1" id="nav-tabs">
-      <button class="nav-tab active" data-target="section-summary">📊 Ringkasan</button>
-      <button class="nav-tab" data-target="section-exam">📋 Keputusan Peperiksaan</button>
-      <button class="nav-tab" data-target="section-course">📚 Pendaftaran Kursus</button>
-      <button class="nav-tab" data-target="section-status">👥 Status Pelajar</button>
-      <button class="nav-tab" data-target="section-checklist">✅ Checklist Pendaftaran</button>
-      <button class="nav-tab" data-target="section-charts">📈 Carta GPA</button>
-    </div>
-  </nav>
+  <!-- LAYOUT: SIDEBAR + CONTENT -->
+  <div class="flex flex-1 min-h-0">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <nav id="nav-tabs">
+        <button class="nav-tab active" data-target="section-summary">📊 Ringkasan</button>
+        <button class="nav-tab" data-target="section-exam">📋 Keputusan Peperiksaan</button>
+        <button class="nav-tab" data-target="section-course">📚 Pendaftaran Kursus</button>
+        <button class="nav-tab" data-target="section-status">👥 Status Pelajar</button>
+        <button class="nav-tab" data-target="section-checklist">✅ Checklist Pendaftaran</button>
+        <button class="nav-tab" data-target="section-charts">📈 Carta GPA</button>
+      </nav>
+    </aside>
 
   <!-- MAIN CONTENT -->
-  <main class="max-w-7xl mx-auto px-4 py-6 space-y-8">
+  <main class="main-content">
+    <div class="py-6 space-y-8">
 
     <!-- SECTION 1: SUMMARY CARDS -->
     <section id="section-summary">
@@ -160,9 +164,12 @@
       </div>
     </section>
 
+    </div>
   </main>
 
-  <footer class="text-center text-xs text-gray-400 py-6 border-t border-gray-200 mt-8">
+  </div><!-- end flex layout -->
+
+  <footer class="text-center text-xs text-gray-400 py-4 border-t border-gray-200">
     Dashboard Penasihat Akademik DIT3J &nbsp;|&nbsp; Data: Sesi 1: 2026/2027
   </footer>
 
