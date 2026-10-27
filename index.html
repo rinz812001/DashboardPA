@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Penasihat Akademik — DIT3J</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { 700: '#1e3a5f', 800: '#162d4a', 900: '#0f1e32' }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen">
+
+  <!-- HEADER -->
+  <header class="bg-navy-800 text-white shadow-lg" style="background-color:#1e3a5f;">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+      <div>
+        <h1 class="text-xl font-bold tracking-wide">🎓 Dashboard Penasihat Akademik</h1>
+        <p class="text-sm text-blue-200 mt-0.5">Kelas <strong>DIT3J</strong> &nbsp;|&nbsp; Sesi Semasa: <strong>Sesi 1: 2026/2027 (Semester 3)</strong></p>
+      </div>
+      <div class="text-xs text-blue-300 text-right">
+        <div>Politeknik Sultan Idris Shah</div>
+        <div>Jabatan Teknologi Maklumat &amp; Komunikasi</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAV TABS -->
+  <nav class="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 flex gap-1 overflow-x-auto py-1" id="nav-tabs">
+      <button class="nav-tab active" data-target="section-summary">📊 Ringkasan</button>
+      <button class="nav-tab" data-target="section-exam">📋 Keputusan Peperiksaan</button>
+      <button class="nav-tab" data-target="section-course">📚 Pendaftaran Kursus</button>
+      <button class="nav-tab" data-target="section-status">👥 Status Pelajar</button>
+      <button class="nav-tab" data-target="section-checklist">✅ Checklist Pendaftaran</button>
+      <button class="nav-tab" data-target="section-charts">📈 Carta GPA</button>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-7xl mx-auto px-4 py-6 space-y-8">
+
+    <!-- SECTION 1: SUMMARY CARDS -->
+    <section id="section-summary">
+      <h2 class="section-title">📊 Ringkasan Kelas DIT3J</h2>
+      <div id="summary-cards" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"></div>
+    </section>
+
+    <!-- SECTION 2: EXAM RESULTS -->
+    <section id="section-exam">
+      <h2 class="section-title">📋 Keputusan Peperiksaan</h2>
+      <div class="bg-white rounded-xl shadow p-4">
+        <div class="flex gap-2 mb-4 flex-wrap">
+          <button class="tab-btn active" data-tab="exam" data-val="Sesi 1: 2025/2026">Sesi 1: 2025/2026</button>
+          <button class="tab-btn" data-tab="exam" data-val="Sesi 2: 2025/2026">Sesi 2: 2025/2026</button>
+        </div>
+        <div class="mb-3">
+          <input type="text" id="exam-search" placeholder="🔍 Cari nama atau no. matrik..." class="search-input" />
+        </div>
+        <div class="overflow-x-auto">
+          <table class="data-table" id="exam-table">
+            <thead>
+              <tr>
+                <th>Bil</th><th>No. Matrik</th><th>Nama</th><th>Kursus &amp; Gred</th>
+                <th>GPA</th><th>CGPA</th>
+              </tr>
+            </thead>
+            <tbody id="exam-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: COURSE REGISTRATION -->
+    <section id="section-course">
+      <h2 class="section-title">📚 Pendaftaran Kursus</h2>
+      <div class="bg-white rounded-xl shadow p-4">
+        <div class="flex gap-2 mb-4 flex-wrap">
+          <button class="tab-btn active" data-tab="course" data-val="Sesi 1: 2025/2026">Sesi 1: 2025/2026</button>
+          <button class="tab-btn" data-tab="course" data-val="Sesi 2: 2025/2026">Sesi 2: 2025/2026</button>
+          <button class="tab-btn" data-tab="course" data-val="Sesi 1: 2026/2027">Sesi 1: 2026/2027</button>
+        </div>
+        <div class="mb-3">
+          <input type="text" id="course-search" placeholder="🔍 Cari nama atau no. matrik..." class="search-input" />
+        </div>
+        <div class="overflow-x-auto">
+          <table class="data-table" id="course-table">
+            <thead>
+              <tr>
+                <th>Bil</th><th>No. Matrik</th><th>Nama</th><th>Kursus Didaftar</th><th>Bil. Kursus</th>
+              </tr>
+            </thead>
+            <tbody id="course-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: STUDENT STATUS -->
+    <section id="section-status">
+      <h2 class="section-title">👥 Status Pengajian Pelajar</h2>
+      <div class="bg-white rounded-xl shadow p-4">
+        <div class="mb-3">
+          <input type="text" id="status-search" placeholder="🔍 Cari nama atau no. matrik..." class="search-input" />
+        </div>
+        <div class="overflow-x-auto">
+          <table class="data-table" id="status-table">
+            <thead>
+              <tr>
+                <th>Bil</th><th>No. Matrik</th><th>Nama</th>
+                <th>Status Pengajian</th><th>Status Daftar Sem 3</th>
+              </tr>
+            </thead>
+            <tbody id="status-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: REGISTRATION CHECKLIST -->
+    <section id="section-checklist">
+      <h2 class="section-title">✅ Checklist Pendaftaran Kursus</h2>
+      <p class="text-sm text-gray-500 mb-4">Pelajar berikut <strong>belum mendaftar</strong> kursus Semester 3 (Sesi 1: 2026/2027). Tandakan langkah yang telah diselesaikan.</p>
+      <div id="checklist-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- SECTION 6: GPA CHARTS -->
+    <section id="section-charts">
+      <h2 class="section-title">📈 Visualisasi GPA</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl shadow p-4">
+          <h3 class="font-semibold text-gray-700 mb-3">Perbandingan GPA Sesi 1 &amp; 2: 2025/2026</h3>
+          <div style="height:380px; position:relative;">
+            <canvas id="chart-bar"></canvas>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl shadow p-4">
+          <h3 class="font-semibold text-gray-700 mb-3">Taburan GPA Sesi 2: 2025/2026</h3>
+          <div style="height:380px; position:relative;">
+            <canvas id="chart-pie"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="text-center text-xs text-gray-400 py-6 border-t border-gray-200 mt-8">
+    Dashboard Penasihat Akademik DIT3J &nbsp;|&nbsp; Data: Sesi 1: 2026/2027
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/charts.js"></script>
+
+</body>
+</html>
